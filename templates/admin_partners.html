@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Gérer Partenaires{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4><i class="fas fa-handshake me-2"></i>Gestion Logos Partenaires</h4>
+                <small>Logos s'affichent dans tous les footers</small>
+            </div>
+            <div class="card-body">
+                <!-- Upload Form -->
+                <div class="row mb-5">
+                    <div class="col-md-8">
+                        <h5><i class="fas fa-upload me-2"></i>Ajouter/Modifier Logos</h5>
+                        <form method="POST" enctype="multipart/form-data">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Logo 1</label>
+                                    <input type="file" class="form-control" name="logo1" accept="image/*,.svg">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Logo 2</label>
+                                    <input type="file" class="form-control" name="logo2" accept="image/*,.svg">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Logo 3</label>
+                                    <input type="file" class="form-control" name="logo3" accept="image/*,.svg">
+                                </div>
+                            </div>
+                            <button type="submit" name="action" value="upload" class="btn btn-primary mt-3">
+                                <i class="fas fa-upload me-2"></i>Mettre à jour
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Current Logos List -->
+                <h5><i class="fas fa-list me-2"></i>Logos Actuels (static/partners/)</h5>
+                {% if partners %}
+                <div class="row g-3 mb-4">
+                    {% for logo in partners %}
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card h-100 border-success">
+                            <img src="{{ url_for('static', filename='partners/' + logo) }}" class="card-img-top" style="height: 120px; object-fit: contain;">
+                            <div class="card-body">
+                                <h6 class="card-title">{{ logo }}</h6>
+                                <form method="POST" style="display: inline;" onsubmit="return confirm('Supprimer {{ logo }}?')">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="filename" value="{{ logo }}">
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i> Supprimer
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="alert alert-warning">Aucun logo partenaire trouvé.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

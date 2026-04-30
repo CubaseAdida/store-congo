@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offres d'emploi - Store Congo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="/">
+<img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+                Store Congo
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}"><i class="fas fa-home me-1"></i>Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('offres') }}"><i class="fas fa-fire me-1"></i>Offres</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('offres_emploi') }}"><i class="fas fa-briefcase me-1"></i>Offres d'emploi</a>
+                    </li>
+                </ul>
+                <form class="d-flex search-bar" action="{{ url_for('search') }}" method="GET">
+                    <input class="form-control me-2" type="search" name="q" placeholder="Rechercher produits/boutiques..." aria-label="Search">
+                    <button class="btn btn-warning" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+                <ul class="navbar-nav ms-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('cart') }}">
+                            <i class="fas fa-shopping-cart me-1"></i>Panier 
+                            {%- set cart_count = session.cart|length if session.cart else 0 -%}
+                            {% if cart_count > 0 %}<span class="badge bg-danger">{{ cart_count }}</span>{% endif %}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h1 class="display-4 fw-bold mb-4">
+                    <i class="fas fa-briefcase me-3 text-success"></i>Offres d'emploi
+                </h1>
+                <p class="lead fs-3 text-muted">Rejoignez l'équipe Store Congo ! Consultez nos offres et postulez dès maintenant.</p>
+            </div>
+        </div>
+
+        {% if jobs %}
+        <div class="row g-4">
+            {% for job in jobs %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 shadow-lg border-0 overflow-hidden">
+                    {% if job.image %}
+                    <img src="{{ url_for('uploaded_file', type='jobs', filename=job.image) }}" class="card-img-top" style="height: 250px; object-fit: cover;" alt="{{ job.title }}">
+                    {% endif %}
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold mb-2">{{ job.title }}</h5>
+                        <p class="card-text">{{ job.description[:150] }}{% if job.description|length > 150 %}...{% endif %}</p>
+                        <ul class="list-unstyled small mb-3">
+                            <li><i class="fas fa-map-marker-alt me-1 text-primary"></i>{{ job.location }}</li>
+                            <li><i class="fas fa-clock me-1 text-warning"></i>{{ job.type }}</li>
+                            <li><i class="fas fa-dollar-sign me-1 text-success"></i>{{ job.salary }}</li>
+                            {% if job.whatsapp %}
+                            <li><i class="fab fa-whatsapp me-1 text-success"></i>{{ job.whatsapp }}</li>
+                            {% endif %}
+                        </ul>
+                        <a href="https://wa.me/{{ job.whatsapp or '242050542421' }}?text=Postulation {{ job.title }}" class="btn btn-success w-100" target="_blank">
+                            <i class="fab fa-whatsapp me-2"></i>Postuler
+                        </a>
+                    </div>
+                    <div class="card-footer text-muted small">
+                        Publiée le {{ job.created_at.strftime('%d/%m/%Y') }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-briefcase fa-5x text-muted mb-4"></i>
+                <h3 class="text-muted mb-4">Aucune offre d'emploi disponible</h3>
+                <p class="lead text-muted">Revenez bientôt ou contactez-nous pour opportunités.</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="text-center mt-5">
+            <p class="lead text-muted">Pas trouvé d'offre ? Contactez-nous pour opportunités !</p>
+            <a href="https://wa.me/242050542421?text=Demande%20emploi%20Store%20Congo" class="btn btn-outline-success btn-lg" target="_blank">
+                <i class="fas fa-paper-plane me-2"></i>Envoyer CV
+            </a>
+        </div>
+    </div>
+
+    <!-- Float buttons -->
+    {%- set cart_count = session.cart|length if session.cart else 0 -%}
+    <a href="https://wa.me/242050542421?text=Bonjour Offres d'emploi Store Congo!" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i><i class="fas fa-headphones" style="margin-left: -10px;"></i>
+    </a>
+    <a href="{{ url_for('cart') }}" class="cart-float" title="{% if cart_count > 0 %}Panier ({{ cart_count }}){% else %}Panier vide{% endif %}">
+        <i class="fas fa-shopping-cart"></i>
+        {% if cart_count > 0 %}<span class="cart-badge">{{ cart_count }}</span>{% endif %}
+    </a>
+
+    <footer class="bg-dark text-white py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 text-center text-md-start">
+                    <h5><i class="fas fa-briefcase me-2 text-success"></i>Offres d'emploi Store Congo</h5>
+                    <p class="mb-0">© 2024 Tous droits réservés.</p>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <a href="https://wa.me/242050542421" class="btn btn-success btn-lg" target="_blank">
+                        <i class="fab fa-whatsapp me-2"></i>Service RH
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

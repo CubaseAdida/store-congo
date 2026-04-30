@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Stores{% endblock %}
+{% block content %}
+<h2>All Stores</h2>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Produits</th>
+                <th>Commentaires</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for store in stores %}
+            <tr>
+                <td><strong>{{ store.id }}</strong></td>
+                <td>{{ store.name }}</td>
+                <td>{{ store.description[:50] or '' }}</td>
+                <td><span class="badge bg-info">{{ store.products|length }}</span></td>
+                <td><span class="badge bg-secondary">{{ store.comments|length }}</span></td>
+                <td>
+                    <a href="{{ url_for('store_detail', store_id=store.id) }}" class="btn btn-sm btn-primary me-1"><i class="fas fa-box"></i> Produits</a>
+{% if store.comments %}
+                    <button class="btn btn-sm btn-warning me-1" data-bs-toggle="collapse" data-bs-target="#comments{{ store.id }}">
+                        <i class="fas fa-comments"></i> Voir ({{ store.comments|length }})
+                    </button>
+                    <div class="collapse" id="comments{{ store.id }}">
+                        {% for comment in store.comments|sort(attribute='created_at', reverse=true)|slice(5) if comment.created_at is defined %}
+                        <div class="border-bottom pb-2 mb-2 small">
+                            <strong>{{ comment.name }}</strong>
+                            <span class="text-muted">{{ comment.created_at.strftime('%d/%m %H:%M') if comment.created_at else 'N/A' }}</span><br>
+                            {{ comment.comment[:100] }}...
+                            <form method="POST" action="{{ url_for('delete_comment', comment_id=comment.id) }}" class="d-inline ms-2" onsubmit="return confirm('Supprimer ?')">
+                                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                            </form>
+                        </div>
+                        {% endfor %}
+                        {% if store.comments|length > 5 %}<small class="text-muted">+{{ store.comments|length - 5 }} autres...</small>{% endif %}
+                    </div>
+                    {% endif %}
+
+                        <button type="submit" class="btn btn-sm btn-danger" title="Supprimer boutique">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+{% endblock %}
+

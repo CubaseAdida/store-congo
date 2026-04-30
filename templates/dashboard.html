@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="card-body">
+                <h2>Welcome, {{ current_user.username }}!</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-md-6">
+        <a href="{{ url_for('add_store') }}" class="card border-primary text-decoration-none">
+            <div class="card-body text-center">
+                <h5 class="card-title">+ Add New Store</h5>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6">
+        <a href="{{ url_for('stores') }}" class="card border-success text-decoration-none">
+            <div class="card-body text-center">
+                <h5 class="card-title">Manage Stores</h5>
+                <p class="card-text">View & manage all stores</p>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-md-6">
+        <a href="{{ url_for('add_news') }}" class="card border-info text-decoration-none">
+            <div class="card-body text-center">
+                <h5 class="card-title"><i class="fas fa-newspaper me-2"></i>+ Ajouter Actualités</h5>
+                <p class="card-text">Publier news avec 3 images (optionnel)</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6">
+        <a href="{{ url_for('add_offre') }}" class="card border-warning text-decoration-none">
+            <div class="card-body text-center">
+                <h5 class="card-title">+ Ajouter Nouvelle Offre</h5>
+                <p class="card-text">Promotions et réductions pour vos boutiques</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6">
+        <a href="{{ url_for('add_offre_emploi') }}" class="card border-success text-decoration-none">
+            <div class="card-body text-center">
+                <h5 class="card-title"><i class="fas fa-plus me-2"></i>+ Nouvelle Offre d'emploi</h5>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6">
+        <a href="{{ url_for('admin_offres_emploi') }}" class="card border-danger text-decoration-none">
+            <div class="card-body text-center">
+                <h5 class="card-title"><i class="fas fa-list me-2"></i>Gérer Offres d'emploi</h5>
+                <p class="card-text">Supprimer offres existantes</p>
+            </div>
+        </a>
+    </div>
+    <!-- New Partners Management -->
+    <div class="col-md-12 mt-4">
+        <a href="{{ url_for('admin_partners') }}" class="card border-info text-decoration-none">
+            <div class="card-body text-center">
+                <h5 class="card-title"><i class="fas fa-handshake me-2"></i>🆕 Gérer Partenaires Logos</h5>
+                <p class="card-text">Upload & delete logos partenaires (footer)</p>
+            </div>
+        </a>
+    </div>
+</div>
+{% endblock %}

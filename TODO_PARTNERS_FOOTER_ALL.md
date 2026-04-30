@@ -1,0 +1,1 @@
+# Partners Footer All Pages - Progress&#10;&#10;- [ ] Refactor index.html to extend base.html&#10;- [ ] Refactor cart.html to extend base.html&#10;- [ ] Check other public pages&#10;- [ ] Test all pages&#10;

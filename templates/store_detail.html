@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}{{ store.name }} - Products{% endblock %}
+{% block content %}
+<div class="alert alert-info">
+  <h4>🛒 {{ store.name }}</h4>
+  <p>{{ store.description or 'Pas de description' }}</p>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="mt-3">
+        {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+</div>
+<!-- Add Product Form -->
+<h4>Add Product</h4>
+<form method="POST" action="{{ url_for('add_product', store_id=store.id) }}" enctype="multipart/form-data" class="mb-4">
+    {{ form.hidden_tag() }}
+    <div class="row">
+        <div class="col-md-3">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control") }}
+        </div>
+        <div class="col-md-3">
+            {{ form.price.label(class="form-label") }}
+            {{ form.price(class="form-control", step="0.01") }}
+        </div>
+        <div class="col-md-3">
+            {{ form.stock.label(class="form-label") }}
+            {{ form.stock(class="form-control") }}
+        </div>
+        <div class="col-md-4">
+            {{ form.image.label(class="form-label") }}
+            {{ form.image(class="form-control") }}
+            <small class="text-muted">JPG, PNG (optionnel)</small>
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+            {{ form.submit(class="btn btn-success w-100", onclick="this.form.submit(); setTimeout(() => location.reload(), 1500);") }}
+        </div>
+    </div>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Auto-dismiss alerts after 10s
+  setTimeout(() => {
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => alert.style.transition = 'opacity 0.5s'; alert.style.opacity = 0);
+  }, 10000);
+});
+</script>
+
+<!-- Products Table -->
+<h4>Products ({{ products|length }})</h4>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>
+                    {% if product.image %}
+                    <img src="{{ url_for('uploaded_file', type='products', filename=product.image) }}"
+                         class="img-thumbnail" style="width:50px;height:50px;object-fit:cover;"
+
+
+                         alt="{{ product.name }}" 
+                         onerror="this.src='https://via.placeholder.com/50?text=No+img'">
+                    {% else %}
+                    <span class="badge bg-secondary">Pas d'image</span>
+                    {% endif %}
+                </td>
+                <td>{{ product.name }}</td>
+                <td>{{ "%.0f"|format(product.price) }} FCFA</td>
+                <td>{{ product.stock }}</td>
+                <td>
+                    <a href="{{ url_for('edit_product', store_id=store.id, product_id=product.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <form method="POST" action="{{ url_for('delete_product', store_id=store.id, product_id=product.id) }}" style="display:inline;" onsubmit="return confirm('Delete?')">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5" class="text-center">No products. Add one above!</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<a href="{{ url_for('stores') }}" class="btn btn-secondary">Back to Stores</a>
+{% endblock %}
+

@@ -1,0 +1,1 @@
+Changements annulés ("reviens en arrière"). Fichiers restaurés à l'original.\n\n- templates/store_public.html\n- templates/search_results.html\n- templates/index.html\n\n**Prochain:** Précisez le petit texte exact au coin des images boutiques (quel texte? quelle page? visible ou tooltip? filename image?). Pas d'overlay dans CSS.

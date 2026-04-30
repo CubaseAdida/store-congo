@@ -1,0 +1,1 @@
+# TODO Actualités ✅ Étapes 1-4 OK\n\n1. [x] Modèle News (models.py)\n2. [x] NewsForm (forms.py)\n3. [x] Routes /admin/add_news /news (app.py)\n4. [x] Dossier static/uploads/news créé\n\n**Prochain:** Étape 5 templates add_news.html + news.html.\n\nRestart `python app.py` test routes? Erreur?

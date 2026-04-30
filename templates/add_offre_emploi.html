@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Ajouter Offre d'emploi{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-success text-white">
+                <h3 class="mb-0"><i class="fas fa-briefcase me-3"></i>Nouvelle Offre d'emploi</h3>
+            </div>
+            <div class="card-body p-5">
+                <form method="POST" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    <div class="row g-4">
+                        <div class="col-md-12">
+                            <label class="form-label fw-bold">{{ form.title.label }}</label>
+                            {{ form.title(class="form-control form-control-lg", placeholder="Ex: Développeur Fullstack Python") }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">{{ form.location.label }}</label>
+                            {{ form.location(class="form-control form-control-lg", placeholder="Brazzaville, Congo") }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.type.label(class="form-label fw-bold") }}
+                            {{ form.type(class="form-control form-control-lg") }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">{{ form.salary.label }}</label>
+                            {{ form.salary(class="form-control form-control-lg", placeholder="500000 - 1000000 FC/mois") }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">{{ form.whatsapp.label }}</label>
+                            {{ form.whatsapp(class="form-control form-control-lg", placeholder="+242 05 05 42 421") }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold">{{ form.description.label }}</label>
+                            {{ form.description(class="form-control", rows=5, placeholder="Détails poste, missions, profil recherché...") }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">{{ form.image.label }}</label>
+                            {{ form.image(class="form-control") }}
+                            <div class="form-text">JPG/PNG pour visuel (optionnel)</div>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        {{ form.submit(class="btn btn-success btn-lg px-5 me-md-2") }}
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary btn-lg px-5">Annuler</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+        const fileName = e.target.files[0]?.name || '';
+        const label = e.target.nextElementSibling;
+        if (fileName) {
+            label.textContent = `Sélectionné : ${fileName}`;
+        }
+    });
+});
+</script>
+{% endblock %}

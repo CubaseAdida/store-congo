@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Ajouter Offre{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-warning text-dark">
+                <h3 class="mb-0"><i class="fas fa-percentage me-3"></i>Nouvelle Offre Promotionnelle</h3>
+            </div>
+            <div class="card-body p-5">
+                <form method="POST" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">{{ form.title.label }}</label>
+                            {{ form.title(class="form-control form-control-lg", placeholder="Ex: Promo Weekend -20%") }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">{{ form.store_id.label }}</label>
+                            {{ form.store_id(class="form-control form-control-lg", placeholder="ID boutique (voir liste boutiques)") }}
+                            <div class="form-text">Trouvez ID dans /stores</div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold">{{ form.description.label }}</label>
+                            {{ form.description(class="form-control", rows=3, placeholder="Détails promotion...") }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">{{ form.discount.label }}</label>
+                            {{ form.discount(class="form-control form-control-lg", step="0.1", placeholder="20.0") }}
+                            <div class="form-text">% de réduction</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">{{ form.image.label }}</label>
+                            {{ form.image(class="form-control") }}
+                            <div class="form-text">JPG, PNG pour visuel promo</div>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        {{ form.submit(class="btn btn-warning btn-lg px-5 me-md-2") }}
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary btn-lg px-5">Annuler</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+        const fileName = e.target.files[0]?.name || '';
+        const label = e.target.nextElementSibling;
+        if (fileName) {
+            label.textContent = `Sélectionné : ${fileName}`;
+        }
+    });
+});
+</script>
+{% endblock %}
