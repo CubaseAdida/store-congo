@@ -156,7 +156,7 @@
 
     <!-- Boutons flottants WhatsApp + Panier -->
     {%- set cart_count = session.cart|length if session.cart else 0 -%}
-<a href="https://api.whatsapp.com/send?phone={{ store.whatsapp or '242050542421' }}&text=Bonjour {{ store.name }}! Intérêt pour {{ product.name }} à {{ "%.0f"|format(product.price) }}FCFA" 
+<a href="https://wa.me/send?phone={{ store.whatsapp or '242050542421' }}&text=Bonjour {{ store.name }}! Intérêt pour {{ product.name }} à {{ "%.0f"|format(product.price) }}FCFA" 
        class="whatsapp-float" 
        target="_blank" 
        rel="noopener noreferrer"
@@ -179,7 +179,7 @@
                     <h5>{{ store.name }} - {{ product.name }}</h5>
                 </div>
                 <div class="col-md-6 text-md-end">
-<a href="https://api.whatsapp.com/send?phone=242050542421&text=Bonjour Service Store Congo!" 
+<a href="https://wa.me/send?phone=242050542421&text=Bonjour Service Store Congo!" 
                        class="btn btn-success" 
                        target="_blank">
                         <i class="fab fa-whatsapp me-2"></i>Service +242 05 05 42 421

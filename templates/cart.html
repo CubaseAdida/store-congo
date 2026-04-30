@@ -80,7 +80,7 @@
                     <span class="h5 text-success">{{ "%.2f"|format(subtotal) }}€</span>
                 </div>
                 {% if items[0].whatsapp %}
-<a href="https://api.whatsapp.com/send?phone={{ items[0].whatsapp.replace('+', '').replace(' ', '') }}&text={% filter urlencode %}Bonjour {{ items[0].store_name }}
+<a href="https://wa.me/send?phone={{ items[0].whatsapp.replace('+', '').replace(' ', '') }}&text={% filter urlencode %}Bonjour {{ items[0].store_name }}
 
 Commande:
 {% for item in items %}
@@ -132,7 +132,7 @@ Total: {{ "%.0f"|format(subtotal) }}€ (livraison gratuite){% endfilter %}"
                     <p class="mb-0">© 2024 Tous droits réservés.</p>
                 </div>
                 <div class="col-md-4 text-center text-md-end">
-<a href="https://api.whatsapp.com/send?phone=242050542421&text=Bonjour%20Service%20Store%20Congo!"
+<a href="https://wa.me/send?phone=242050542421&text=Bonjour%20Service%20Store%20Congo!"
                        class="btn btn-success" 
                        target="_blank" 
                        rel="noopener noreferrer">
@@ -156,7 +156,7 @@ Total: {{ "%.0f"|format(subtotal) }}€ (livraison gratuite){% endfilter %}"
     </footer>
 
 <!-- WhatsApp Float Button -->
-    <a href="https://api.whatsapp.com/send?phone=242050542421&text=Bonjour%20du%20panier%20Store%20Congo!" 
+<a href="https://wa.me/send?phone=242050542421&text=Bonjour%20du%20panier%20Store%20Congo!"
        class="whatsapp-float" 
        target="_blank" 
        rel="noopener noreferrer"

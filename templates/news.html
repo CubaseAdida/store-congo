@@ -104,7 +104,7 @@
 
     <!-- Float buttons -->
     {%- set cart_count = session.cart|length if session.cart else 0 -%}
-<a href="https://api.whatsapp.com/send?phone=242050542421&text=Bonjour Actualités Store Congo!" class="whatsapp-float" target="_blank">
+<a href="https://wa.me/send?phone=242050542421&text=Bonjour Actualités Store Congo!" class="whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
     <a href="{{ url_for('cart') }}" class="cart-float" title="{% if cart_count > 0 %}Panier ({{ cart_count }}){% else %}Panier vide{% endif %}">
