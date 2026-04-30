@@ -611,12 +611,18 @@ if __name__ == '__main__':
     with app.app_context():
         try:
             db.create_all()
+            # Create new admin user (Muteba328/Muteba328)
+            if not User.query.filter_by(username='Muteba328').first():
+                new_admin = User(username='Muteba328')
+                new_admin.set_password('Muteba328')
+                db.session.add(new_admin)
+            # Keep old admin for compatibility
             if not User.query.filter_by(username='admin').first():
                 admin = User(username='admin')
                 admin.set_password('Muteba328')
                 db.session.add(admin)
-                db.session.commit()
-                print('✅ Admin créé: admin / Muteba328')
+            db.session.commit()
+            print('✅ Admin créé: Muteba328 / Muteba328')
             print('✅ DB initialisée correctement - tables créées')
         except Exception as e:
             print(f'❌ Erreur init DB: {e}')
