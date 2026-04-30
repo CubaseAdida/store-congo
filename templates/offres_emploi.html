@@ -76,7 +76,7 @@
                             <li><i class="fab fa-whatsapp me-1 text-success"></i>{{ job.whatsapp }}</li>
                             {% endif %}
                         </ul>
-                        <a href="https://wa.me/{{ job.whatsapp or '242050542421' }}?text=Postulation {{ job.title }}" class="btn btn-success w-100" target="_blank">
+<a href="https://api.whatsapp.com/send?phone={{ job.whatsapp or '242050542421' }}&text=Postulation {{ job.title }}" class="btn btn-success w-100" target="_blank">
                             <i class="fab fa-whatsapp me-2"></i>Postuler
                         </a>
                     </div>
@@ -99,7 +99,7 @@
 
         <div class="text-center mt-5">
             <p class="lead text-muted">Pas trouvé d'offre ? Contactez-nous pour opportunités !</p>
-            <a href="https://wa.me/242050542421?text=Demande%20emploi%20Store%20Congo" class="btn btn-outline-success btn-lg" target="_blank">
+<a href="https://api.whatsapp.com/send?phone=242050542421&text=Demande%20emploi%20Store%20Congo" class="btn btn-outline-success btn-lg" target="_blank">
                 <i class="fas fa-paper-plane me-2"></i>Envoyer CV
             </a>
         </div>
@@ -107,7 +107,7 @@
 
     <!-- Float buttons -->
     {%- set cart_count = session.cart|length if session.cart else 0 -%}
-    <a href="https://wa.me/242050542421?text=Bonjour Offres d'emploi Store Congo!" class="whatsapp-float" target="_blank">
+<a href="https://api.whatsapp.com/send?phone=242050542421&text=Bonjour Offres d'emploi Store Congo!" class="whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp"></i><i class="fas fa-headphones" style="margin-left: -10px;"></i>
     </a>
     <a href="{{ url_for('cart') }}" class="cart-float" title="{% if cart_count > 0 %}Panier ({{ cart_count }}){% else %}Panier vide{% endif %}">
@@ -123,7 +123,7 @@
                     <p class="mb-0">© 2024 Tous droits réservés.</p>
                 </div>
                 <div class="col-md-4 text-center text-md-end">
-                    <a href="https://wa.me/242050542421" class="btn btn-success btn-lg" target="_blank">
+<a href="https://api.whatsapp.com/send?phone=242050542421&text=Bonjour Service RH!" class="btn btn-success btn-lg" target="_blank">
                         <i class="fab fa-whatsapp me-2"></i>Service RH
                     </a>
                 </div>
